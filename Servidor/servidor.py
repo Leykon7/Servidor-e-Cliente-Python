@@ -41,27 +41,31 @@ class Servidor():
                 msg = con.recv(1024)
                 msg_s = str(msg.decode('ascii'))
 
-                print("\n"+msg_s+"\n")
-
+                #print("\n"+msg_s)
                 listaMsg = msg_s.split()
-                print("\n")
-                print(listaMsg)
-                print("\n")
-                print(listaMsg[0])
-                print("\n")
-                print(listaMsg[1])
-                print("\n")
+                # print(listaMsg)
+                # print(listaMsg[0])
+                # print(listaMsg[1])
+                # print("\n")
+                
                 info = yq.Ticker(listaMsg[1])
 
-                if listaMsg[0] == 'C':
-                    con.send(bytes(info.company_officers))
-                if listaMsg[0] == 'S':
-                    con.send(bytes(info.summary_profile))
-                if listaMsg[0] == 'H':
-                    con.send(bytes(info.earning_history))
-                if listaMsg[0] == 'P':
-                    con.send(bytes(info.esg_scores))
+                if listaMsg[0] == 'E':
 
+                    # print(info.summary_profile["adress1"])
+                    # a = info.summary_profile
+                    # print('\n' + a)
+                    # a = a["adress1"]
+                    # print('\n' + a)
+
+                    #con.send(bytes(info.summary_profile[listaMsg[1]]['address1'],'ascii'))
+                    con.send(bytes(info.summary_detail[listaMsg[1]]['bid'], 'ascii'))
+                if listaMsg[0] == 'T':
+                    con.send(bytes(info.summary_profile[listaMsg[1]]['phone'],'ascii'))
+                if listaMsg[0] == 'S':
+                    con.send(bytes(info.summary_profile[listaMsg[1]]['website'],'ascii'))
+                if listaMsg[0] == 'D':
+                    con.send(bytes(info.summary_detail[listaMsg[1]]['dividendRate'],'ascii'))
 
                 print(client," -> requisição atendida")
             except OSError as e:

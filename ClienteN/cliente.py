@@ -34,11 +34,11 @@ class Cliente():
             while msg != '\x18':
                 msg = input("Digite o simbolo da empresa (x para sair): ")
                 op = input(
-                    "\nOperacoes:\n\n C - para Oficiais da Empresa\n S - Local da Empresa\n H - Historico de Ganho\n P - Pontuação\n\nDigite a operacao desejada: "
+                    "\nOperacoes:\n\n E - para endereço da Empresa\n T - Telefone da Empresa\n S - Site\n D - Taxa de Dividendo\n\nDigite a operacao desejada: "
                 )
                 
                 msg = str(op.upper() + ' ' + msg.upper())
-                print("\n"+ msg + "\n")
+                #print("\n"+ msg + "\n")
                 if msg == '':
                     continue
                 elif msg == 'x':
@@ -46,7 +46,7 @@ class Cliente():
 
                 self.__tcp.send(bytes(msg, 'ascii'))
                 resp = self.__tcp.recv(1024)
-                print(resp.decode('ascii'))
+                print('\n' + resp.decode('ascii'))
             self.__tcp.close()
         except Exception as e:
             print("Erro ao realizar comunicação com o servidor", e.args)
